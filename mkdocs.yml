@@ -1,0 +1,6 @@
+site_name: UAV Thesis
+nav:
+  - Home: index.md
+  - Environment Setup: environment.md
+  - Software Architecture: architecture.md
+theme: readthedocs
