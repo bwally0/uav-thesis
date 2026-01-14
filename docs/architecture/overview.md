@@ -42,9 +42,3 @@ The deicison layer determines what the vehicle should do based on mission object
 - TODO
 
 The decison layer produces advisory intent only, it has no direct command authority. All intent must pass through the control layer's safety validation and lease gating.
-
-### Summary
-
-- **Supervisor** decides if autonomy may act.
-- **Control** decides how actions are safely executed.
-- **Decision** decides what the system should attempt.

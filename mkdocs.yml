@@ -2,14 +2,13 @@ site_name: UAV Thesis
 nav:
   - Home: index.md
   - Setup Guide:
-    - Overview: getting-started/overview.md
-    - Prerequisites: getting-started/prerequisites.md
     - Installation: getting-started/installation.md
   - Architecture:
     - Overview: architecture/overview.md
     - Supervisor: architecture/supervisor.md
     - Decision Layer: architecture/decision.md
     - Control Layer: architecture/control.md
+    - System Lifecycles: architecture/lifecycle.md
   - Tutorials:
-      - Overview: tutorials/overview.md
+    - Overview: tutorials/overview.md
 theme: readthedocs
