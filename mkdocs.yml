@@ -1,4 +1,5 @@
 site_name: UAV Thesis
+site_url: https://bwally0.github.io/uav-thesis/
 nav:
   - Home: index.md
   - Setup Guide:

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="None" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>UAV Thesis</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Home";
+        var mkdocs_page_input_path = "index.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="." class="icon icon-home"> UAV Thesis
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Home</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#motivation">Motivation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#scope">Scope</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#description">Description</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#software-stack">Software Stack</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#table-of-contents">Table of Contents</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Setup Guide</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="getting-started/installation/">Installation</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Architecture</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="architecture/overview/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="architecture/supervisor/">Supervisor</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="architecture/decision/">Decision Layer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="architecture/control/">Control Layer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="architecture/lifecycle/">System Lifecycles</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="tutorials/overview/">Overview</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href=".">UAV Thesis</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Home</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="autonomous-uav-implementation-and-simulation-for-drone-development">Autonomous UAV Implementation and Simulation for Drone Development</h1>
+<p>This documentation describes the design, implementation and simulation of an open-source companion computer autonomy stack for PX4-based unmanned aerial vehicles (UAVs). The project focues on companion-side software architecture, safety supervision, and reproducible development workflows rather than flight-controller firmware or vehicle-specific hardware.</p>
+<h2 id="motivation">Motivation</h2>
+<p>Modern autonomous UAV systems rely on a compnaion computer to perform perception, planning, and mission logic while delegating low-level stabilization and actuation to a flight controller usch as PX4. While PX4 provides documentation for Offboard control and communication interfaces, guidance on how to architect companion-side autonomy is limited and often fragmented.</p>
+<p>Most publically available resources focus on:</p>
+<ul>
+<li>Basic ROS2 setup and message passing.</li>
+<li>Minimal examples of Offboard setpoint publishing.</li>
+</ul>
+<p>In practice, production-grade systems require significantly more structure: supervision, fault handling, deterministic control itnerfaces, and clear seperation between decision logic and actuation. While these patterns are well established in ground robtotics, existing frameworks such as Nav2 are not directly applicable to flight robots.</p>
+<p>Many mature companion-computer autonomy stacks are proprietary, domain-specific, or tightly coupled to internal company infrastructure, limiting their usefullness as a learning resrouce or reusable foundations for research and development.</p>
+<p>This project is motivated by the need for:</p>
+<ul>
+<li>A clear, open reference architecture for UAV companion computers.</li>
+<li>Practical workflows for development, testing, and simulation.</li>
+<li>A foundation that can be extended to different levels of autonomy, missions, and research use-cases without rewriting the core framework.</li>
+</ul>
+<h2 id="scope">Scope</h2>
+<p>The scope of this documentaiton is strictly limitd to the companion computer software layer and its interaction with PX4 through Offboard control interfaces.</p>
+<h2 id="description">Description</h2>
+<h2 id="software-stack">Software Stack</h2>
+<h2 id="table-of-contents">Table of Contents</h2>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="getting-started/installation/" class="btn btn-neutral float-right" title="Installation">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+      <span><a href="getting-started/installation/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = ".";</script>
+    <script src="js/theme_extra.js"></script>
+    <script src="js/theme.js"></script>
+      <script src="search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 1.6.1
+Build Date UTC : 2026-01-14 20:00:26.799795+00:00
+-->

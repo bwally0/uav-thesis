@@ -6,6 +6,7 @@ This documentation describes the design, implementation and simulation of an ope
 Modern autonomous UAV systems rely on a compnaion computer to perform perception, planning, and mission logic while delegating low-level stabilization and actuation to a flight controller usch as PX4. While PX4 provides documentation for Offboard control and communication interfaces, guidance on how to architect companion-side autonomy is limited and often fragmented.
 
 Most publically available resources focus on:
+
 - Basic ROS2 setup and message passing.
 - Minimal examples of Offboard setpoint publishing.
 
@@ -14,6 +15,7 @@ In practice, production-grade systems require significantly more structure: supe
 Many mature companion-computer autonomy stacks are proprietary, domain-specific, or tightly coupled to internal company infrastructure, limiting their usefullness as a learning resrouce or reusable foundations for research and development.
 
 This project is motivated by the need for:
+
 - A clear, open reference architecture for UAV companion computers.
 - Practical workflows for development, testing, and simulation.
 - A foundation that can be extended to different levels of autonomy, missions, and research use-cases without rewriting the core framework.
