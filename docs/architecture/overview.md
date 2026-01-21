@@ -31,7 +31,7 @@ The control layer is responsible for converting high-level intent actions into F
 
 - **Lease Gate**: Only passes actuation commands when the lease is valid.
 - **Intent Arbiter**: Processes the single intent stream from the decision layer, applying priority and envelope checks.
-- **Envelope Validator**: Applies detemrinistic safety filters to all commands, ensuring they remain within the vehicle's physical limits, geofence boundaries, and operational constraints.
+- **Intent Validation**: Applies detemrinistic safety filters to all commands, ensuring they remain within the vehicle's physical limits, geofence boundaries, and operational constraints.
 - **FC Offboard Interface**: Maintains the PX4 offboard handshake (2Hz minimum heartbeat) and executes a fixed-rate control loop (20-50Hz). Publishes safe hold setpoints when autonomy is not authorized.
 
 ### Decision Layer
