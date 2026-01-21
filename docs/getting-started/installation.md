@@ -186,7 +186,11 @@ make px4_sitl none_iris
 ```
 
 4. AirSim ROS2 Wrapper (WSL2)
+``` bash
+ ros2 launch airsim_ros_pkgs airsim_node.launch.py host_ip:=192.168.128.1
+```
 
+Double check `ros2 topic list` to see if all the important nodes are running. You should see `/airsim_node/*` and `/fmu/*` topics.
 
 ### Additional Resources
 
