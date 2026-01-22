@@ -37,4 +37,11 @@ This project provides a basic framework for building, testing, and simulating si
 
 ## Software Stack
 
+![Software Stack](https://i.imgur.com/4eOCp7g.png)
+
+Cosys-AirSim provides a simulation environment for testing. The companion comptuer communicates with the flight throug uXRCE-DDS and Cosys-AirSim provides a ROS2 wrapper that allows the retrieval of sensor data from the simulation environment. 
+
+TODO
+- drone "peripherals" send command to actuate servo in Cosys-AirSim
+
 ## Table of Contents

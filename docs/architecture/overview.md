@@ -2,6 +2,8 @@
 
 This section provides a high-level overview of the **UAV Lease-Gated Autonomy Stack**, a software archiecture built on top of ROS2 for autonomous drone systems. The core design philosphy is explicit, revocable authorization and deterministic safety enforcement, seperating concerns of system health monitoring, control, and decision-making.
 
+![Basic Control Flow](https://i.imgur.com/BdnlAEK.png)
+
 ### The Lease Gate
 
 The system is built around the concept of a Lease Gate. This is a time-bounded authorization barrier that sits between the autonomy logic of the companion computer (CC) and the flight controller (FC). It acts as a deterministic switch:
