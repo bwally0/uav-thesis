@@ -171,7 +171,6 @@ Add inbound rules for `TCP 4560`, `UDP 14540`, and `Unreal Engine`.
 Run these commands in seperate terminals.
 
 1. Cosys-AirSim (Windows)
-Start simulator first, PX4 will connect via UDP 14540
 
 2. uXRCE-DDS (WSL2)
 ``` bash
@@ -187,10 +186,12 @@ make px4_sitl none_iris
 
 4. AirSim ROS2 Wrapper (WSL2)
 ``` bash
- ros2 launch airsim_ros_pkgs airsim_node.launch.py host_ip:=192.168.128.1
+source ~/Cosys-AirSim/ros2/install/setup.bash
+ros2 launch airsim_ros_pkgs airsim_node.launch.py host_ip:=192.168.128.1
 ```
-
 Double check `ros2 topic list` to see if all the important nodes are running. You should see `/airsim_node/*` and `/fmu/*` topics.
+
+5. Framework Template Nodes (WSL2)
 
 ### Additional Resources
 
