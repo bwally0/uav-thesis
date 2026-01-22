@@ -1,1 +1,9 @@
 .vscode
+
+# ros2 build files
+**/log
+**/install
+**/build
+
+# mkdocs build
+**/site
