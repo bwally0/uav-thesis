@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://bwally0.github.io/uav-thesis/architecture/supervisor/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Supervisor - UAV Thesis</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Supervisor";
+        var mkdocs_page_input_path = "architecture/supervisor.md";
+        var mkdocs_page_url = "/uav-thesis/architecture/supervisor/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> UAV Thesis
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Setup Guide</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../getting-started/installation/">Installation</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../getting-started/configuration/">Configuration</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Architecture</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../overview/">Overview</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Supervisor</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#px4-authority-model">PX4 Authority model</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#supervisor-position-in-stack">Supervisor Position in Stack</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#lease-manager">Lease Manager</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#health-monitoring">Health Monitoring</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#fault-classification">Fault Classification</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#supervisor-required-topics">Supervisor required Topics</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decision/">Decision Layer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../control/">Control Layer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lifecycle/">System Lifecycles</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/overview/">Overview</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">UAV Thesis</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Architecture</li>
+      <li class="breadcrumb-item active">Supervisor</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="supervisorwatchdog-layer">Supervisor/Watchdog Layer</h1>
+<p>The supervisor is the safety authority of the companion computer. It determines whether autonomy is allowed to act, under what constraints can autonomy act, and what actions must occur to keep the drone in a safe state. The architecture is designed around the PX4 authority model which treats offboard control as advisory, revocable and non-authoritative. </p>
+<h3 id="px4-authority-model">PX4 Authority model</h3>
+<p>The PX4 authority model refers to which source (pilot, internal autopilot, companion computer, etc.) has control over the vehicle at any given time, and under what conditions can that authority be granted, shared, or revoked. PX4 operates in discrete flight modes (Land, Return, Offboard, Mission) and each determines who provides the setpoints and how much authority the autopilot has over actuators. </p>
+<p>Offboard mode is the important mode for companion computers. The external system sends setpoints via MAVLink/uXRCE-DDS. PX4 delegates low-level control to these external setpoints while still running its internal rate/attitude controllers.</p>
+<p>Even in offboard mode PX4 retains override authority for failsafes, RC override, and internal safety checks. The companion computer only has high-level setpoint authority.</p>
+<h3 id="supervisor-position-in-stack">Supervisor Position in Stack</h3>
+<p>The Supervisor sits above the Control and Decision layers in terms of authority, but has a different set of responsibilities</p>
+<ul>
+<li>The decision layer decides what the system would like to do.</li>
+<li>The control layer decides how to safety express those decision to the flight controller.</li>
+<li>The supervisor decide whether either of those layers is allowed to influence the vehicle at all.</li>
+</ul>
+<p>The supervisor's responsiblity is to authorize autonomy, send explicit directives to the control layer to perform safe actions, and classify faults to determine what directive to take. The supervisor does not have direct communication to the flight controller so if the supervisor needs to perform an action in the name of safety it must do so through control layer directives.</p>
+<h3 id="lease-manager">Lease Manager</h3>
+<p>The lease manager is the supervisor's primary enforcement mechanism for the execution of autonomy in the stack. The lease manager has the following responsibilities:</p>
+<ul>
+<li>Grant leases to the control layer when certain preconditions are met.</li>
+<li>Periodically renew leases while conditions remain valid.</li>
+<li>Revoke leases. Examples of reasons to revoke a lease: safety violation, fault classification requiring loss of autonomy, loss of heartbeat from control or decision layers, or PX4 flightmode change out of offboard.</li>
+</ul>
+<p>Each layer that is under the Supervisor is lease-gated. The control layer is lease-gated from actuation (commands send to PX4 based off of intent by the decision layer) and the decision layer is gated from sending intent to the control layer. Control layer will still be able to send fallback setpoints to the flight controller even if the lease is invalid, it will also send commands to maintain the handshake between the control layer and the flight controller. The lease only gates commands that was previously intent from the decision layer.</p>
+<p>Preconditions for granting/renewing a lease, and how long is a lease and when does it get renewed is dependent on implementation.</p>
+<p>For the example implementation of the framework the lease is implemented as follows:
+<strong>TODO</strong></p>
+<h3 id="health-monitoring">Health Monitoring</h3>
+<p>The supervisor continuously monitors the health of the software running in the stack, the hardware that the stack is running on, and the condition of the flight controller.</p>
+<ul>
+<li>Monitors heartbeats from the control and decision layer. Heartbeat loss is treated as a fault and will be handled in fault classification.</li>
+<li>Monitor the control loop in the control layer to ensure that timing is being met.</li>
+<li>Monitor vehicle health given information from the flight controller. This could include failsafe flags, estimator validity, change in flight mode, etc.</li>
+<li>Monitor hardware system health. This includes CPU load, memory ussage, or sensor uptime.</li>
+</ul>
+<p>If any of these systems are not within acceptable values a fault is generated and handled by the fault classifier.</p>
+<h3 id="fault-classification">Fault Classification</h3>
+<p>A fault is any observed condition that invalidates on ror more safety assumptions required for safe autonomous operation. Faults can originate from:</p>
+<ul>
+<li>Interal stack monitoring (e.g. heartbeat loss, control-loop timing violation, high CPU/memory usage)</li>
+<li>PX4 telemetry (e.g. asserted failsafe flags, estimator rejections, invalid positions).</li>
+<li>Other nodes (e.g., perception pipeline detects an imminent collision or geofence violation)</li>
+</ul>
+<p>A warning is an observed condition that does not yet invalidate safety assumptions but is logged for information or predicitve purposes.</p>
+<p>The supervisor is the sole authority for classifying incoming faults and deciding the response. Classification follows a severity based match-and-action model:</p>
+<ol>
+<li>Receieve the fault report.</li>
+<li>Match the fault type/code against predfined severity levels.</li>
+<li>Execute the corresponding directive. A directive is a high priority command sent to the control layer.</li>
+</ol>
+<p>Directives have absolute precedence over any intent from the decision layer. The control layer must honor the directive while preserving the offboard handshake.</p>
+<p>Example severity levels and directives (customizable per implementation):</p>
+<p>** TODO**</p>
+<p>Directives are explicit messages that instruct the control layer to:</p>
+<ul>
+<li>Transition to a specific PX4 mode.</li>
+<li>Publish fallback setpoints.</li>
+<li>Execute predfined safe behaviors.</li>
+<li>Ignore decision layer intent until cleared.</li>
+</ul>
+<h3 id="supervisor-required-topics">Supervisor required Topics</h3>
+<p>/fmu/out/failsafe_flags</p>
+<pre><code>timestamp: 1769017538192250
+mode_req_angular_velocity: 8312190
+mode_req_attitude: 8311166
+mode_req_local_alt: 8257918
+mode_req_local_position: 7995448
+mode_req_local_position_relaxed: 262212
+mode_req_global_position: 56
+mode_req_global_position_relaxed: 0
+mode_req_mission: 8
+mode_req_offboard_signal: 16384
+mode_req_home_position: 32
+mode_req_wind_and_flight_time_compliance: 2621464
+mode_req_prevent_arming: 3944480
+mode_req_manual_control: 34119
+mode_req_other: 2139095040
+angular_velocity_invalid: false
+attitude_invalid: false
+local_altitude_invalid: false
+local_position_invalid: false
+local_position_invalid_relaxed: false
+local_velocity_invalid: false
+global_position_invalid: false
+global_position_invalid_relaxed: false
+auto_mission_missing: true
+offboard_control_signal_lost: true
+home_position_invalid: false
+manual_control_signal_lost: true
+gcs_connection_lost: true
+battery_warning: 0
+battery_low_remaining_time: false
+battery_unhealthy: false
+geofence_breached: false
+mission_failure: false
+vtol_fixed_wing_system_failure: false
+wind_limit_exceeded: false
+flight_time_limit_exceeded: false
+position_accuracy_low: false
+navigator_failure: false
+fd_critical_failure: false
+fd_esc_arming_failure: false
+fd_imbalanced_prop: false
+fd_motor_failure: false
+</code></pre>
+<p>/fmu/out/vehicle_status_v1</p>
+<pre><code>timestamp: 1769017639546586
+armed_time: 1769017626134683
+takeoff_time: 1769017627946722
+arming_state: 2
+latest_arming_reason: 3
+latest_disarming_reason: 0
+nav_state_timestamp: 1769017632590821
+nav_state_user_intention: 4
+nav_state: 4
+executor_in_charge: 0
+valid_nav_states_mask: 2147411327
+can_set_nav_states_mask: 8308095
+failure_detector_status: 0
+hil_state: 0
+vehicle_type: 1
+failsafe: false
+failsafe_and_user_took_over: false
+failsafe_defer_state: 0
+gcs_connection_lost: true
+gcs_connection_lost_counter: 0
+high_latency_data_link_lost: false
+is_vtol: false
+is_vtol_tailsitter: false
+in_transition_mode: false
+in_transition_to_fw: false
+system_type: 2
+system_id: 1
+component_id: 1
+safety_button_available: true
+safety_off: true
+power_input_valid: true
+usb_connected: false
+open_drone_id_system_present: false
+open_drone_id_system_healthy: false
+parachute_system_present: false
+parachute_system_healthy: false
+rc_calibration_in_progress: false
+calibration_enabled: false
+pre_flight_checks_pass: true
+</code></pre>
+<p>/fmu/out/estimator_status_flags</p>
+<pre><code>timestamp: 1769017692429033
+timestamp_sample: 1769017692258029
+control_status_changes: 15
+cs_tilt_align: true
+cs_yaw_align: true
+cs_gnss_pos: true
+cs_opt_flow: false
+cs_mag_hdg: false
+cs_mag_3d: true
+cs_mag_dec: false
+cs_in_air: true
+cs_wind: false
+cs_baro_hgt: true
+cs_rng_hgt: false
+cs_gps_hgt: true
+cs_ev_pos: false
+cs_ev_yaw: false
+cs_ev_hgt: false
+cs_fuse_beta: false
+cs_mag_field_disturbed: false
+cs_fixed_wing: false
+cs_mag_fault: false
+cs_fuse_aspd: false
+cs_gnd_effect: false
+cs_rng_stuck: false
+cs_gnss_yaw: false
+cs_mag_aligned_in_flight: true
+cs_ev_vel: false
+cs_synthetic_mag_z: false
+cs_vehicle_at_rest: false
+cs_gnss_yaw_fault: false
+cs_rng_fault: false
+cs_inertial_dead_reckoning: false
+cs_wind_dead_reckoning: false
+cs_rng_kin_consistent: false
+cs_fake_pos: false
+cs_fake_hgt: false
+cs_gravity_vector: false
+cs_mag: true
+cs_ev_yaw_fault: false
+cs_mag_heading_consistent: true
+cs_aux_gpos: false
+cs_rng_terrain: false
+cs_opt_flow_terrain: false
+cs_valid_fake_pos: false
+cs_constant_pos: false
+cs_baro_fault: false
+cs_gnss_vel: true
+cs_gnss_fault: false
+cs_yaw_manual: false
+cs_gnss_hgt_fault: false
+fault_status_changes: 0
+fs_bad_mag_x: false
+fs_bad_mag_y: false
+fs_bad_mag_z: false
+fs_bad_hdg: false
+fs_bad_mag_decl: false
+fs_bad_airspeed: false
+fs_bad_sideslip: false
+fs_bad_optflow_x: false
+fs_bad_optflow_y: false
+fs_bad_acc_vertical: false
+fs_bad_acc_clipping: false
+innovation_fault_status_changes: 4
+reject_hor_vel: false
+reject_ver_vel: false
+reject_hor_pos: false
+reject_ver_pos: false
+reject_yaw: false
+reject_airspeed: false
+reject_sideslip: false
+reject_hagl: false
+reject_optflow_x: false
+reject_optflow_y: false
+</code></pre>
+<p>/fmu/out/vehicle_land_detected</p>
+<pre><code>timestamp: 1769017743973002
+freefall: false
+ground_contact: true
+maybe_landed: true
+landed: true
+in_ground_effect: true
+in_descend: true
+has_low_throttle: true
+vertical_movement: false
+horizontal_movement: false
+rotational_movement: false
+close_to_ground_or_skipped_check: true
+at_rest: true
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../overview/" class="btn btn-neutral float-left" title="Overview"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../decision/" class="btn btn-neutral float-right" title="Decision Layer">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../overview/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../decision/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

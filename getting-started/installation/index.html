@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://bwally0.github.io/uav-thesis/getting-started/installation/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Installation - UAV Thesis</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Installation";
+        var mkdocs_page_input_path = "getting-started/installation.md";
+        var mkdocs_page_url = "/uav-thesis/getting-started/installation/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> UAV Thesis
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Setup Guide</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Installation</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#wsl2-setup-ubuntu-2204-lts">WSL2 Setup (Ubuntu 22.04 LTS)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#install-px4">Install PX4</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#install-ros2">Install ROS2</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#setup-micro-xrce-dss">Setup Micro XRCE-DSS</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#airsim-setup">AirSim Setup</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#download-template-source-code">Download Template Source Code</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#run-order">Run Order</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#additional-resources">Additional Resources</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../configuration/">Configuration</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Architecture</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../architecture/overview/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../architecture/supervisor/">Supervisor</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../architecture/decision/">Decision Layer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../architecture/control/">Control Layer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../architecture/lifecycle/">System Lifecycles</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/overview/">Overview</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">UAV Thesis</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Setup Guide</li>
+      <li class="breadcrumb-item active">Installation</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="installation-guide">Installation Guide</h1>
+<p>This guide is for a Windows 11 environment.</p>
+<h3 id="wsl2-setup-ubuntu-2204-lts">WSL2 Setup (Ubuntu 22.04 LTS)</h3>
+<p>Open PowerShell as administrator and install Ubuntu-22.04.</p>
+<pre><code class="language-PowerShell">wsl --install -d Ubuntu-22.04
+</code></pre>
+<p>Open WSL.</p>
+<pre><code class="language-PowerShell">wsl -d Ubuntu-22.04
+</code></pre>
+<p>Install the essentials.</p>
+<pre><code class="language-bash">sudo apt update &amp;&amp; sudo apt upgrade -y
+sudo apt install -y build-essential cmake git
+</code></pre>
+<h3 id="install-px4">Install PX4</h3>
+<p>Read <a href="#additional-resources">PX4 ROS2 User Guide</a> for more details.</p>
+<pre><code class="language-bash">cd ~
+git clone https://github.com/PX4/PX4-Autopilot.git --recursive
+bash ./PX4-Autopilot/Tools/setup/ubuntu.sh
+cd PX4-Autopilot/
+make px4_sitl
+</code></pre>
+<p>If you get this error regarding protoc, you must download and compile protoc 3.6.1 from source manually. Otherwise, skip this section. (Referenced from <a href="#additional-resources">"Protoc error on build"</a> forum post on discuss.px4.io).</p>
+<pre><code>/usr/include/gz/msgs10/gz/msgs/details/serialized.pb.h:12:2: error: #error This file was generated by a newer version of protoc which is
+   12 | #error This file was generated by a newer version of protoc which is
+      |  ^~~~~
+</code></pre>
+<p>Remove existing Protobuf version.</p>
+<pre><code class="language-bash">sudo apt-get remove --purge protobuf-compiler libprotobuf-dev
+sudo apt-get autoremove
+</code></pre>
+<p>Download and compile protoc 3.6.1 from source.</p>
+<pre><code class="language-bash">cd ~
+wget https://github.com/protocolbuffers/protobuf/releases/download/v3.6.1/protobuf-all-3.6.1.tar.gz
+tar -xzf protobuf-all-3.6.1.tar.gz
+cd protobuf-3.6.1
+./configure --prefix=/usr/local
+make -j$(nproc)
+sudo make install
+sudo ldconfig
+</code></pre>
+<p>Verify installation (it should be 3.6.1 now).</p>
+<pre><code class="language-bash">protoc --version
+</code></pre>
+<p>Clean PX4 project directory.</p>
+<pre><code class="language-bash">cd ~/PX4-Autopilot
+make distclean
+</code></pre>
+<p>Restart WSL</p>
+<pre><code class="language-bash">exit
+</code></pre>
+<p>Shutdown.</p>
+<pre><code class="language-PowerShell">wsl --shutdown
+</code></pre>
+<p>Wait a few seceonds then open a new WSL terminal.</p>
+<pre><code class="language-PowerShell">wsl -d Ubuntu-22.04
+</code></pre>
+<p>Try the build again:</p>
+<pre><code class="language-bash">cd ~/PX4-Autopilot/
+make px4_sitl
+</code></pre>
+<h3 id="install-ros2">Install ROS2</h3>
+<p>Install ROS2 Humble on Ubuntu 22.04.</p>
+<pre><code class="language-bash">cd ~
+sudo apt update &amp;&amp; sudo apt install locales
+sudo locale-gen en_US en_US.UTF-8
+sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
+sudo apt install software-properties-common
+sudo add-apt-repository universe
+sudo apt update &amp;&amp; sudo apt install curl -y
+sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+echo &quot;deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release &amp;&amp; echo $UBUNTU_CODENAME) main&quot; | sudo tee /etc/apt/sources.list.d/ros2.list &gt; /dev/null
+sudo apt update &amp;&amp; sudo apt upgrade -y
+sudo apt install ros-humble-desktop
+sudo apt install ros-dev-tools
+source /opt/ros/humble/setup.bash &amp;&amp; echo &quot;source /opt/ros/humble/setup.bash&quot; &gt;&gt; .bashrc
+</code></pre>
+<p>Install some missing dependencies.</p>
+<pre><code class="language-bash">pip install --user -U empy==3.3.4 pyros-genmsg setuptools
+</code></pre>
+<h3 id="setup-micro-xrce-dss">Setup Micro XRCE-DSS</h3>
+<p>uXRCE-DDS allows the PX4 flight controller to natively participate in a ROS2 DDS network. The client runs on PX4, which communicates with an agent on the ROS2 companion computer.</p>
+<pre><code class="language-bash">cd ~
+git clone -b v2.4.3 https://github.com/eProsima/Micro-XRCE-DDS-Agent.git
+cd Micro-XRCE-DDS-Agent
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
+sudo ldconfig /usr/local/lib/
+cd ~
+</code></pre>
+<p>Start the agent.</p>
+<pre><code class="language-bash">MicroXRCEAgent udp4 -p 8888
+</code></pre>
+<h3 id="airsim-setup">AirSim Setup</h3>
+<p>For this project we will be using <a href="https://cosys-lab.github.io/Cosys-AirSim/">Cosys-AirSim</a> as our simulator, a similar set up can be accomplished with other simulators like Gazebo. Cosys-AirSim comes with a ROS2 wrapper that will allow us to read sensor data from the simulator.</p>
+<ol>
+<li>
+<p>Install Cosys-AirSim</p>
+</li>
+<li>
+<p>Configure AirSim plugin for PX4</p>
+</li>
+</ol>
+<p>Most connection issues between UE5 on your local windows machine and the flight controller in WSL2 can be fixed by adding inbound rules to the connection ports and to UE5.</p>
+<p>Add inbound rules for <code>TCP 4560</code>, <code>UDP 14540</code>, and <code>Unreal Engine</code>.</p>
+<h3 id="download-template-source-code">Download Template Source Code</h3>
+<h3 id="run-order">Run Order</h3>
+<p>Run these commands in seperate terminals.</p>
+<ol>
+<li>
+<p>Cosys-AirSim (Windows)</p>
+</li>
+<li>
+<p>uXRCE-DDS (WSL2)</p>
+</li>
+</ol>
+<pre><code class="language-bash">MicroXRCEAgent udp4 -p 8888
+</code></pre>
+<ol>
+<li>PX4 SITL (WSL2)</li>
+</ol>
+<pre><code class="language-bash">cd ~/PX4-Autopilot
+make px4_sitl none_iris
+</code></pre>
+<ol>
+<li>AirSim ROS2 Wrapper (WSL2)</li>
+</ol>
+<pre><code class="language-bash">source ~/Cosys-AirSim/ros2/install/setup.bash
+ros2 launch airsim_ros_pkgs airsim_node.launch.py host_ip:=192.168.128.1
+</code></pre>
+<p>Double check <code>ros2 topic list</code> to see if all the important nodes are running. You should see <code>/airsim_node/*</code> and <code>/fmu/*</code> topics.</p>
+<ol>
+<li>Framework Template Nodes (WSL2)</li>
+</ol>
+<h3 id="additional-resources">Additional Resources</h3>
+<ul>
+<li><a href="https://docs.px4.io/main/en/ros2/user_guide">PX4 ROS2 User Guide</a></li>
+<li><a href="https://discuss.px4.io/t/protoc-error-on-build/44661">Protoc error on build</a></li>
+<li><a href="https://cosys-lab.github.io/Cosys-AirSim/">Cosys-AirSim Docs</a></li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../.." class="btn btn-neutral float-left" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../configuration/" class="btn btn-neutral float-right" title="Configuration">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../.." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../configuration/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
