@@ -4,22 +4,25 @@ The supervisor is the safety authority of the companion computer. It determines 
 
 ### PX4 Authority model
 
-notes:
-- supervisor works on top of PX4 safety, PX4 can independelty trigger failsafes and change modes and the supervisor will be able to react by revoking lease and maintaining a safe internal state.
+The PX4 authority model refers to which source (pilot, internal autopilot, companion computer, etc.) has control over the vehicle at any given time, and under what conditions can that authority be granted, shared, or revoked. PX4 operates in discrete flight modes (Land, Return, Offboard, Mission) and each determines who provides the setpoints and how much authority the autopilot has over actuators. 
+
+Offboard mode is the important mode for companion computers. The external system sends setpoints via MAVLink/uXRCE-DDS. PX4 delegates low-level control to these external setpoints while still running its internal rate/attitude controllers.
+
+Even in offboard mode PX4 retains override authority for failsafes, RC override, and internal safety checks. The companion computer only has high-level setpoint authority.
 
 ### Supervisor Position in Stack
 
 The Supervisor sits above the Control and Decision layers in terms of authority, but has a different set of responsibilities
 
 - The decision layer decides what the system would like to do.
-- The control alyer decides how to safety express those decision to the flight controller.
+- The control layer decides how to safety express those decision to the flight controller.
 - The supervisor decide whether either of those layers is allowed to influence the vehicle at all.
 
-The supervisor's responsiblity is to authorize autonomy, send explcit directives to the control layer to perform safe actions, and classify faults to determine what directive to take. The supervisor does not have direct communication to the flight controller so if the supervisor needs to perfrom an action in the name of safety it must do so through control layer directives.
+The supervisor's responsiblity is to authorize autonomy, send explicit directives to the control layer to perform safe actions, and classify faults to determine what directive to take. The supervisor does not have direct communication to the flight controller so if the supervisor needs to perform an action in the name of safety it must do so through control layer directives.
 
 ### Lease Manager
 
-The lease manager is the supervisor's primary enforcement mechanmism for the execution of autonomy in the stack. The lease manager has the following responsibilities:
+The lease manager is the supervisor's primary enforcement mechanism for the execution of autonomy in the stack. The lease manager has the following responsibilities:
 
 - Grant leases to the control layer when certain preconditions are met.
 - Periodically renew leases while conditions remain valid.
@@ -27,8 +30,10 @@ The lease manager is the supervisor's primary enforcement mechanmism for the exe
 
 Each layer that is under the Supervisor is lease-gated. The control layer is lease-gated from actuation (commands send to PX4 based off of intent by the decision layer) and the decision layer is gated from sending intent to the control layer. Control layer will still be able to send fallback setpoints to the flight controller even if the lease is invalid, it will also send commands to maintain the handshake between the control layer and the flight controller. The lease only gates commands that was previously intent from the decision layer.
 
-TODO what are precondixtoins for granting/renewing a lease?
-TODO how long is a lease and when does it get renewed?
+Preconditions for granting/renewing a lease, and how long is a lease and when does it get renewed is dependent on implementation.
+
+For the example implementation of the framework the lease is implemented as follows:
+**TODO**
 
 ### Health Monitoring
 
@@ -39,17 +44,40 @@ The supervisor continuously monitors the health of the software running in the s
 - Monitor vehicle health given information from the flight controller. This could include failsafe flags, estimator validity, change in flight mode, etc.
 - Monitor hardware system health. This includes CPU load, memory ussage, or sensor uptime.
 
-TODO add more explicits to what is monitored: XRCE-DSS link heath, temperature, critical process and node liveness.
+If any of these systems are not within acceptable values a fault is generated and handled by the fault classifier.
 
 ### Fault Classification
 
-A fault is an observed condition that invalidates one or more safety assumptions required for autonomy. Any node can send a fault to the supervisor for handling if it determines that a safety contraint is not met. A warning is an observed condition that does not break the safety assumptions used for informational use.
+A fault is any observed condition that invalidates on ror more safety assumptions required for safe autonomous operation. Faults can originate from:
 
-The supervisor is responsible for classifying the faults it receieves and deciding the appropriate action to take based on the severity of the fault. Fault handling follows a match and action model. Match the fault to the severity level and perform an action based on it. Actions could range from lease revocation, to flight control mode switches, to execution of emergency procedures. The supervisor must used the control layer to perform an action since it does not have direct communication with the flight controller. This type of interaction is done with directives that the supervisor gives to the control layer. Directive action have absolute priority over intents send by the decision layer. The control layer must execute the appropriate commands based on the directive while maintaining the handshake with the flight controller.
+- Interal stack monitoring (e.g. heartbeat loss, control-loop timing violation, high CPU/memory usage)
+- PX4 telemetry (e.g. asserted failsafe flags, estimator rejections, invalid positions).
+- Other nodes (e.g., perception pipeline detects an imminent collision or geofence violation)
 
-TODO add example table for severity levels.
-TODO add examples of directives sent to the flight controller.
+A warning is an observed condition that does not yet invalidate safety assumptions but is logged for information or predicitve purposes.
 
+The supervisor is the sole authority for classifying incoming faults and deciding the response. Classification follows a severity based match-and-action model:
+
+1. Receieve the fault report.
+2. Match the fault type/code against predfined severity levels.
+3. Execute the corresponding directive. A directive is a high priority command sent to the control layer.
+
+Directives have absolute precedence over any intent from the decision layer. The control layer must honor the directive while preserving the offboard handshake.
+
+Example severity levels and directives (customizable per implementation):
+
+** TODO**
+
+
+Directives are explicit messages that instruct the control layer to:
+
+- Transition to a specific PX4 mode.
+- Publish fallback setpoints.
+- Execute predfined safe behaviors.
+- Ignore decision layer intent until cleared.
+
+
+### Supervisor required Topics
 
 /fmu/out/failsafe_flags
 ```

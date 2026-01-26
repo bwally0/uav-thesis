@@ -37,7 +37,7 @@ Cosys-AirSim serves as the primary simulation environment (although Gazebo can w
 
 The autonomy logic itself is structued in three decoupled layers (read more in Architecture section).
 
-- Supervisor Layer: continuous monitors system health, PX$ failsafe flags, node liveliness, resource usage, and environmental constraints. It leases autonomy to the control layer only when strict safety preconditions are met.
+- Supervisor Layer: continuous monitors system health, PX4 failsafe flags, node liveliness, resource usage, and environmental constraints. It leases autonomy to the control layer only when strict safety preconditions are met.
 - Control Layer: enforced by the lease gate, validates and filters all outgoing commands, maintains communication with the PX4 flight controller, and falls back to safe hold setpoints when the lease is revoked.
 - Decision Layer: generates high-level intent via composable behavior trees. It has no direct actuation authority as all outputs pass through validation and gating.
 

@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-# 2Hz handshake
 import rclpy
 from rclpy.node import Node
 
