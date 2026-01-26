@@ -6,7 +6,7 @@ This section provides a high-level overview of the **UAV Lease-Gated Autonomy St
 
 ### The Lease Gate
 
-The system is built around the concept of a Lease Gate. This is a time-bounded authorization barrier that sits between the autonomy logic of the companion computer (CC) and the flight controller (FC). It acts as a deterministic switch:
+The system is built around the concept of a Lease Gate. It is a time-bounded authorization barrier that permits drone autonomy. The lease exists in the following two states:
 
 - **Granted**: When a valid, unexpired lease is active, authorized control commands are allowed to pass through to the FC.
 - **Revoked/Expired**: The gate immediately blocks all actuation commands. The control software must cease and may only hold position or execute predefined safe behavior.
@@ -40,7 +40,7 @@ The control layer is responsible for converting high-level intent actions into F
 
 The deicison layer determines what the vehicle should do based on mission objectives, sensor data, and environmental context.
 
-- **Behavior Tree Engine**: Executes modular, composable behaviors with priority-based arbitration. Higher-priority safet behaviores can preempt mission tasks.
+- **Behavior Tree Engine**: Executes modular, composable behaviors with priority-based arbitration. Higher-priority safet behaviors can preempt mission tasks.
 - TODO
 
 The decison layer produces advisory intent only, it has no direct command authority. All intent must pass through the control layer's safety validation and lease gating.

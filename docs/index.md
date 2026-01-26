@@ -21,27 +21,24 @@ This project is motivated by the need for:
 - A framework that can be extended to different levels of autonomy, missions, and research use-cases without rewriting core functionality.
 
 ## Scope
-The scope of this documentation is strictly limited to the companion computer software layer and its interaction with PX4 through Offboard control interfaces.
-
-
-**TODO**
-other scope
-- single drone, no swarm,
-- documentation was written and tested with a Windows 11 + WSL2 development environment.
-- provide foundational templates reusable for different scenarios.
-- audience: hobbyists, researchers, developers
+The scope of this documentation is strictly limited to the companion computer software layer and its interaction with PX4 through Offboard control interfaces. It defines the design of the architecture itself as well as development workflows and how to use the provided implementation for your use-case. Documentation was written and tested with a Windows 11 + WSL2 environment. Although an example implementation of these concepts is provided, you could implement the architecture on your own. 
 
 ## Description
 
-This project provides a basic framework for building, testing, and simulating single autonomous drones. 
+The UAV Lease-Gated Autonomy Stack is an open-source reference architecture and companion computer software framework for building safe, modular, and reproducible autonomous single-drone systems on top of PX4 and ROS2. Unlike basic Offboard examples that focus only on setpoint publishing or simple ROS2 message passing, this project delivers an autonomy stack with production in mind. The architecture takes inspiriation from existing ground-robotics patterns but adapts to the constraints of aerial vehicles. Autonomy is always explicity leased and is never implicitly assumed.
 
 ## Software Stack
 
 ![Software Stack](https://i.imgur.com/4eOCp7g.png)
 
-Cosys-AirSim provides a simulation environment for testing. The companion comptuer communicates with the flight throug uXRCE-DDS and Cosys-AirSim provides a ROS2 wrapper that allows the retrieval of sensor data from the simulation environment. 
+The stack integrates simulation, middleware, and layed autonomy logic for both development and eventual hardware deployment.
 
-TODO
-- drone "peripherals" send command to actuate servo in Cosys-AirSim
+Cosys-AirSim serves as the primary simulation environment (although Gazebo can work just as well for your implementation), providing high-fidelity rendering, physics, and sensor simulation, allowing for photo realistic testing and iteration without physical hardware. The companion computer communicates bidirectionally with the PX4 flight controller via uXRCE-DDS (the ROS2 bridge for PX4's uORB topics). This allows the autonomy stack to subscribe to vehicle state/telemetry and publish Offboard commands. Cosys-AirSim includes a ROS2 wrapper that bridges simulation sensor data into standard ROS2 topics, making it easy to feed behavior nodes.
+
+The autonomy logic itself is structued in three decoupled layers (read more in Architecture section).
+
+- Supervisor Layer: continuous monitors system health, PX$ failsafe flags, node liveliness, resource usage, and environmental constraints. It leases autonomy to the control layer only when strict safety preconditions are met.
+- Control Layer: enforced by the lease gate, validates and filters all outgoing commands, maintains communication with the PX4 flight controller, and falls back to safe hold setpoints when the lease is revoked.
+- Decision Layer: generates high-level intent via composable behavior trees. It has no direct actuation authority as all outputs pass through validation and gating.
 
 ## Table of Contents

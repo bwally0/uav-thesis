@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 
-# 2Hz handshake 
+# 2Hz handshake
 import rclpy
 from rclpy.node import Node
 
+
 class OffbaordNode(Node):
     def __init__(self):
-        super().__init__('offboard_node')
-        self.get_logger().info('Offboard node has been started.')
+        super().__init__("offboard_node")
+        self.get_logger().info("Offboard node has been started.")
 
-        
+
 def main(args=None):
     rclpy.init(args=args)
 
@@ -20,6 +21,6 @@ def main(args=None):
     offboard_node.destroy_node()
     rclpy.shutdown()
 
-if __name__ == '__main__':
-    main()
 
+if __name__ == "__main__":
+    main()
