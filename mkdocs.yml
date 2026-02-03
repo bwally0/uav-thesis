@@ -2,9 +2,6 @@ site_name: UAV Thesis
 site_url: https://bwally0.github.io/uav-thesis/
 nav:
   - Home: index.md
-  - Setup Guide:
-    - Installation: getting-started/installation.md
-    - Configuration: getting-started/configuration.md
   - Architecture:
     - Overview: architecture/overview.md
     - Supervisor: architecture/supervisor.md
@@ -13,4 +10,6 @@ nav:
     - System Lifecycles: architecture/lifecycle.md
   - Tutorials:
     - Overview: tutorials/overview.md
+    - Installation: tutorials/installation.md
+    - Configuration: tutorials/configuration.md
 theme: readthedocs
