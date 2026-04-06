@@ -20,12 +20,17 @@ This project is motivated by the need for:
 - Practical workflows for development, testing, and simulation.
 - A framework that can be extended to different levels of autonomy, missions, and research use-cases without rewriting core functionality.
 
+![Drone Diagram](https://i.imgur.com/JavYUAr.png)
+
 ## Scope
 The scope of this documentation is strictly limited to the companion computer software layer and its interaction with PX4 through Offboard control interfaces. It defines the design of the architecture itself as well as development workflows and how to use the provided implementation for your use-case. Documentation was written and tested with a Windows 11 + WSL2 environment. Although an example implementation of these concepts is provided, you could implement the architecture on your own. 
 
 ## Description
 
 The UAV Lease-Gated Autonomy Stack is an open-source reference architecture and companion computer software framework for building safe, modular, and reproducible autonomous single-drone systems on top of PX4 and ROS2. Unlike basic Offboard examples that focus only on setpoint publishing or simple ROS2 message passing, this project delivers an autonomy stack with production in mind. The architecture takes inspiriation from existing ground-robotics patterns but adapts to the constraints of aerial vehicles. Autonomy is always explicity leased and is never implicitly assumed.
+
+![Control Flow Chart](https://i.imgur.com/JT1SuIY.png)
+
 
 ## Software Stack
 

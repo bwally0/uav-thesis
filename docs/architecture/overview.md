@@ -4,7 +4,10 @@ This section provides a high-level overview of the **UAV Lease-Gated Autonomy St
 
 ![Basic Control Flow](https://i.imgur.com/BdnlAEK.png)
 
+
 ### The Lease Gate
+
+![Lease Gate Diagram](https://i.imgur.com/EYwH8HR.png)
 
 The system is built around the concept of a Lease Gate. It is a time-bounded authorization barrier that permits drone autonomy. The lease exists in the following two states:
 
@@ -14,6 +17,8 @@ The system is built around the concept of a Lease Gate. It is a time-bounded aut
 A lease is a short-lived token granted by the supervisor only when a strict set of safety preconditions are met. This ensures that autonomy is never assumed, but always permitted within a known-safe envelope.
 
 ## Layers of the Stack
+
+![Control Flow Chart](https://i.imgur.com/JT1SuIY.png)
 
 The stack is logically divided into three distinct layers: *Supervisor Layer*, *Control Layer*, and the *Decision Layer*. Each with a specific responsibility and well defined interfaces between them.
 

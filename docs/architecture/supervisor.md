@@ -12,6 +12,8 @@ Even in offboard mode PX4 retains override authority for failsafes, RC override,
 
 ### Supervisor Position in Stack
 
+![Supervisor Flowchart](https://i.imgur.com/JFkUsUs.png)
+
 The Supervisor sits above the Control and Decision layers in terms of authority, but has a different set of responsibilities
 
 - The decision layer decides what the system would like to do.
@@ -47,6 +49,8 @@ The supervisor continuously monitors the health of the software running in the s
 If any of these systems are not within acceptable values a fault is generated and handled by the fault classifier.
 
 ### Fault Classification
+
+![Fault Classification Flowchart](https://i.imgur.com/hIguQqr.png)
 
 A fault is any observed condition that invalidates on ror more safety assumptions required for safe autonomous operation. Faults can originate from:
 

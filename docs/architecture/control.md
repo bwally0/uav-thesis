@@ -2,6 +2,8 @@
 
 The control layer converts a single intent stream from the decision layer into PX4-compatible flight commands when authorized bt the lease gate. It enforces safe boundaries and maintains the offboard handshake regardless of authorization state. 
 
+![Control Layer Flowchart](https://i.imgur.com/phVT4zX.png)
+
 ### Offboard Interface
 
 The control layer must maintain a handshake with the flight controller in order to obtain offboard control.
