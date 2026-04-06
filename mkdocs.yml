@@ -5,9 +5,10 @@ nav:
   - Architecture:
     - Overview: architecture/overview.md
     - Supervisor: architecture/supervisor.md
-    - Decision Layer: architecture/decision.md
     - Control Layer: architecture/control.md
+    - Decision Layer: architecture/decision.md
     - System Lifecycles: architecture/lifecycle.md
+    - QoS: architecture/qos.md
   - Tutorials:
     - Installation: tutorials/installation.md
     - Configuration: tutorials/configuration.md
