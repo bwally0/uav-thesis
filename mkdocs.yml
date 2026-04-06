@@ -11,4 +11,4 @@ nav:
   - Tutorials:
     - Installation: tutorials/installation.md
     - Configuration: tutorials/configuration.md
-theme: readthedocs
+theme: mkdocs
