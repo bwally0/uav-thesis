@@ -2,6 +2,17 @@
 
 This guide is for a Windows 11 environment.
 
+## Table of Contents
+
+- [WSL2 Setup (Ubuntu 22.04 LTS)](#wsl2-setup-ubuntu-2204-lts)
+- [Install PX4](#install-px4)
+- [Install ROS2](#install-ros2)
+- [Setup Micro XRCE-DDS](#setup-micro-xrce-dss)
+- [AirSim Setup](#airsim-setup)
+- [Download Template Source Code](#download-template-source-code)
+- [Run Order](#run-order)
+- [Additional Resources](#additional-resources)
+
 ### WSL2 Setup (Ubuntu 22.04 LTS)
 
 Open PowerShell as administrator and install Ubuntu-22.04.

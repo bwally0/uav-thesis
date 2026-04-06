@@ -2,7 +2,21 @@
 
 This section provides a high-level overview of the **UAV Lease-Gated Autonomy Stack**, a software archiecture built on top of ROS2 for autonomous drone systems. The core design philosphy is explicit, revocable authorization and deterministic safety enforcement, seperating concerns of system health monitoring, control, and decision-making.
 
-![Basic Control Flow](https://i.imgur.com/BdnlAEK.png)
+## Table of Contents
+
+- [Drone Basics](#drone-basics)
+- [The Lease Gate](#the-lease-gate)
+- [Layers of the Stack](#layers-of-the-stack)
+    - [Supervisor Layer](#supervisor-layer)
+    - [Control Layer](#control-layer)
+    - [Decision Layer](#decision-layer)
+
+### Drone Basics
+
+![Drone Diagram](https://i.imgur.com/JavYUAr.png)
+
+
+
 
 
 ### The Lease Gate
@@ -18,7 +32,8 @@ A lease is a short-lived token granted by the supervisor only when a strict set 
 
 ## Layers of the Stack
 
-![Control Flow Chart](https://i.imgur.com/JT1SuIY.png)
+![Basic Control Flow](https://i.imgur.com/BdnlAEK.png)
+
 
 The stack is logically divided into three distinct layers: *Supervisor Layer*, *Control Layer*, and the *Decision Layer*. Each with a specific responsibility and well defined interfaces between them.
 

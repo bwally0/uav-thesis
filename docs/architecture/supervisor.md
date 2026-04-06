@@ -1,6 +1,15 @@
 # Supervisor/Watchdog Layer
 
-The supervisor is the safety authority of the companion computer. It determines whether autonomy is allowed to act, under what constraints can autonomy act, and what actions must occur to keep the drone in a safe state. The architecture is designed around the PX4 authority model which treats offboard control as advisory, revocable and non-authoritative. 
+The supervisor is the safety authority of the companion computer. It determines whether autonomy is allowed to act, under what constraints can autonomy act, and what actions must occur to keep the drone in a safe state. The architecture is designed around the PX4 authority model which treats offboard control as advisory, revocable and non-authoritative.
+
+## Table of Contents
+
+- [PX4 Authority Model](#px4-authority-model)
+- [Supervisor Position in Stack](#supervisor-position-in-stack)
+- [Lease Manager](#lease-manager)
+- [Health Monitoring](#health-monitoring)
+- [Fault Classification](#fault-classification)
+- [Supervisor Required Topics](#supervisor-required-topics)
 
 ### PX4 Authority model
 

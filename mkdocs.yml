@@ -9,7 +9,6 @@ nav:
     - Control Layer: architecture/control.md
     - System Lifecycles: architecture/lifecycle.md
   - Tutorials:
-    - Overview: tutorials/overview.md
     - Installation: tutorials/installation.md
     - Configuration: tutorials/configuration.md
 theme: readthedocs
