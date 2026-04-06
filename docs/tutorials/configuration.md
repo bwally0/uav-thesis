@@ -5,9 +5,6 @@ This guide covers the configuration of Cosys-AirSim settings and system paramete
 ## Table of Contents
 
 - [Example Cosys-AirSim Settings](#example-cosys-airsim-settings)
-- [Vehicle Configuration](#vehicle-configuration)
-- [Sensor Configuration](#sensor-configuration)
-- [PX4 Parameters](#px4-parameters)
 
 ### Example Cosys-AirSim Settings
 

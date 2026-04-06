@@ -15,8 +15,18 @@ This section provides a high-level overview of the **UAV Lease-Gated Autonomy St
 
 ![Drone Diagram](https://i.imgur.com/JavYUAr.png)
 
+At the lowest level, a UAV consists of a few basic components:
 
+- **Motors & Propellers**: Brushless motors spin propellers to generate upward thrust on the vehicle frame.
+- **Electronic Speed Controllers (ESCs)**: Dedicated hardware that translates digital commands into motor outputs, controlling the speed of each motor.
+- **Sensors**: A suite of sensors including an inertial measurement unit (IMU), barometer, and GPS tells the system where in the world the vehicle is, how fast it is moving, and in what direction.
+- **Flight Controller (FC)**: The core processing unit that reads sensor data, runs stabilization algorithms, and commands the ESCs to keep the drone airborne.
 
+Flight controllers run software known as an **autopilot**, with PX4 being a prominent open-source example. The autopilot abstracts the low-level hardware into a set of control interfaces, allowing external systems to issue movement commands and providing the foundation on which higher-level autonomy can be built.
+
+This is where the **companion computer** comes in. While the flight controller is solely responsible for vehicle stabilization and low-level motion, a companion computer sits alongside it to provide higher-level autonomy. Tasks such as perception, mission logic, and decision-making are computationally intensive and do not need to operate at the same tight timing requirements as the flight control loop, making them well-suited to run on a separate, more capable machine.
+
+The companion computer issues high-level commands to the flight controller through its exposed interfaces, which then translates those commands into actuator outputs. This division of responsibility for autonomous drone control is well established in practice, and this architecture provides a structured approach to implementing the companion computer side of this system.
 
 
 ### The Lease Gate
@@ -61,6 +71,5 @@ The control layer is responsible for converting high-level intent actions into F
 The deicison layer determines what the vehicle should do based on mission objectives, sensor data, and environmental context.
 
 - **Behavior Tree Engine**: Executes modular, composable behaviors with priority-based arbitration. Higher-priority safet behaviors can preempt mission tasks.
-- TODO
 
 The decison layer produces advisory intent only, it has no direct command authority. All intent must pass through the control layer's safety validation and lease gating.

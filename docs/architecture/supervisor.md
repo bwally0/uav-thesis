@@ -33,6 +33,9 @@ The supervisor's responsiblity is to authorize autonomy, send explicit directive
 
 ### Lease Manager
 
+
+![Lease Gate Diagram](https://i.imgur.com/EYwH8HR.png)
+
 The lease manager is the supervisor's primary enforcement mechanism for the execution of autonomy in the stack. The lease manager has the following responsibilities:
 
 - Grant leases to the control layer when certain preconditions are met.
@@ -43,8 +46,6 @@ Each layer that is under the Supervisor is lease-gated. The control layer is lea
 
 Preconditions for granting/renewing a lease, and how long is a lease and when does it get renewed is dependent on implementation.
 
-For the example implementation of the framework the lease is implemented as follows:
-**TODO**
 
 ### Health Monitoring
 
@@ -76,11 +77,6 @@ The supervisor is the sole authority for classifying incoming faults and decidin
 3. Execute the corresponding directive. A directive is a high priority command sent to the control layer.
 
 Directives have absolute precedence over any intent from the decision layer. The control layer must honor the directive while preserving the offboard handshake.
-
-Example severity levels and directives (customizable per implementation):
-
-** TODO**
-
 
 Directives are explicit messages that instruct the control layer to:
 
