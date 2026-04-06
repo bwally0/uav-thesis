@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="https://bwally0.github.io/uav-thesis/tutorials/installation/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Installation - UAV Thesis</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">UAV Thesis</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Architecture</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../architecture/overview/" class="dropdown-item">Overview</a>
+</li>
+                                    
+<li>
+    <a href="../../architecture/supervisor/" class="dropdown-item">Supervisor</a>
+</li>
+                                    
+<li>
+    <a href="../../architecture/control/" class="dropdown-item">Control Layer</a>
+</li>
+                                    
+<li>
+    <a href="../../architecture/decision/" class="dropdown-item">Decision Layer</a>
+</li>
+                                    
+<li>
+    <a href="../../architecture/lifecycle/" class="dropdown-item">System Lifecycles</a>
+</li>
+                                    
+<li>
+    <a href="../../architecture/qos/" class="dropdown-item">QoS</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Tutorials</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="./" class="dropdown-item active" aria-current="page">Installation</a>
+</li>
+                                    
+<li>
+    <a href="../configuration/" class="dropdown-item">Configuration</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../../architecture/qos/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../configuration/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#installation-guide" class="nav-link">Installation Guide</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#table-of-contents" class="nav-link">Table of Contents</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="installation-guide">Installation Guide</h1>
+<p>This guide is for a Windows 11 environment.</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#wsl2-setup-ubuntu-2204-lts">WSL2 Setup (Ubuntu 22.04 LTS)</a></li>
+<li><a href="#install-px4">Install PX4</a></li>
+<li><a href="#install-ros2">Install ROS2</a></li>
+<li><a href="#setup-micro-xrce-dss">Setup Micro XRCE-DDS</a></li>
+<li><a href="#airsim-setup">AirSim Setup</a></li>
+<li><a href="#download-template-source-code">Download Template Source Code</a></li>
+<li><a href="#run-order">Run Order</a></li>
+<li><a href="#additional-resources">Additional Resources</a></li>
+</ul>
+<h3 id="wsl2-setup-ubuntu-2204-lts">WSL2 Setup (Ubuntu 22.04 LTS)</h3>
+<p>Open PowerShell as administrator and install Ubuntu-22.04.</p>
+<pre><code class="language-PowerShell">wsl --install -d Ubuntu-22.04
+</code></pre>
+<p>Open WSL.</p>
+<pre><code class="language-PowerShell">wsl -d Ubuntu-22.04
+</code></pre>
+<p>Install the essentials.</p>
+<pre><code class="language-bash">sudo apt update &amp;&amp; sudo apt upgrade -y
+sudo apt install -y build-essential cmake git
+</code></pre>
+<h3 id="install-px4">Install PX4</h3>
+<p>Read <a href="#additional-resources">PX4 ROS2 User Guide</a> for more details.</p>
+<pre><code class="language-bash">cd ~
+git clone https://github.com/PX4/PX4-Autopilot.git --recursive
+bash ./PX4-Autopilot/Tools/setup/ubuntu.sh
+cd PX4-Autopilot/
+make px4_sitl
+</code></pre>
+<p>If you get this error regarding protoc, you must download and compile protoc 3.6.1 from source manually. Otherwise, skip this section. (Referenced from <a href="#additional-resources">"Protoc error on build"</a> forum post on discuss.px4.io).</p>
+<pre><code>/usr/include/gz/msgs10/gz/msgs/details/serialized.pb.h:12:2: error: #error This file was generated by a newer version of protoc which is
+   12 | #error This file was generated by a newer version of protoc which is
+      |  ^~~~~
+</code></pre>
+<p>Remove existing Protobuf version.</p>
+<pre><code class="language-bash">sudo apt-get remove --purge protobuf-compiler libprotobuf-dev
+sudo apt-get autoremove
+</code></pre>
+<p>Download and compile protoc 3.6.1 from source.</p>
+<pre><code class="language-bash">cd ~
+wget https://github.com/protocolbuffers/protobuf/releases/download/v3.6.1/protobuf-all-3.6.1.tar.gz
+tar -xzf protobuf-all-3.6.1.tar.gz
+cd protobuf-3.6.1
+./configure --prefix=/usr/local
+make -j$(nproc)
+sudo make install
+sudo ldconfig
+</code></pre>
+<p>Verify installation (it should be 3.6.1 now).</p>
+<pre><code class="language-bash">protoc --version
+</code></pre>
+<p>Clean PX4 project directory.</p>
+<pre><code class="language-bash">cd ~/PX4-Autopilot
+make distclean
+</code></pre>
+<p>Restart WSL</p>
+<pre><code class="language-bash">exit
+</code></pre>
+<p>Shutdown.</p>
+<pre><code class="language-PowerShell">wsl --shutdown
+</code></pre>
+<p>Wait a few seceonds then open a new WSL terminal.</p>
+<pre><code class="language-PowerShell">wsl -d Ubuntu-22.04
+</code></pre>
+<p>Try the build again:</p>
+<pre><code class="language-bash">cd ~/PX4-Autopilot/
+make px4_sitl
+</code></pre>
+<h3 id="install-ros2">Install ROS2</h3>
+<p>Install ROS2 Humble on Ubuntu 22.04.</p>
+<pre><code class="language-bash">cd ~
+sudo apt update &amp;&amp; sudo apt install locales
+sudo locale-gen en_US en_US.UTF-8
+sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
+sudo apt install software-properties-common
+sudo add-apt-repository universe
+sudo apt update &amp;&amp; sudo apt install curl -y
+sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+echo &quot;deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release &amp;&amp; echo $UBUNTU_CODENAME) main&quot; | sudo tee /etc/apt/sources.list.d/ros2.list &gt; /dev/null
+sudo apt update &amp;&amp; sudo apt upgrade -y
+sudo apt install ros-humble-desktop
+sudo apt install ros-dev-tools
+source /opt/ros/humble/setup.bash &amp;&amp; echo &quot;source /opt/ros/humble/setup.bash&quot; &gt;&gt; .bashrc
+</code></pre>
+<p>Install some missing dependencies.</p>
+<pre><code class="language-bash">pip install --user -U empy==3.3.4 pyros-genmsg setuptools
+</code></pre>
+<h3 id="setup-micro-xrce-dss">Setup Micro XRCE-DSS</h3>
+<p>uXRCE-DDS allows the PX4 flight controller to natively participate in a ROS2 DDS network. The client runs on PX4, which communicates with an agent on the ROS2 companion computer.</p>
+<pre><code class="language-bash">cd ~
+git clone -b v2.4.3 https://github.com/eProsima/Micro-XRCE-DDS-Agent.git
+cd Micro-XRCE-DDS-Agent
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
+sudo ldconfig /usr/local/lib/
+cd ~
+</code></pre>
+<p>Start the agent.</p>
+<pre><code class="language-bash">MicroXRCEAgent udp4 -p 8888
+</code></pre>
+<h3 id="airsim-setup">AirSim Setup</h3>
+<p>For this project we will be using <a href="https://cosys-lab.github.io/Cosys-AirSim/">Cosys-AirSim</a> as our simulator, a similar set up can be accomplished with other simulators like Gazebo. Cosys-AirSim comes with a ROS2 wrapper that will allow us to read sensor data from the simulator.</p>
+<ol>
+<li>
+<p>Install Cosys-AirSim</p>
+</li>
+<li>
+<p>Configure AirSim plugin for PX4</p>
+</li>
+</ol>
+<p>Most connection issues between UE5 on your local windows machine and the flight controller in WSL2 can be fixed by adding inbound rules to the connection ports and to UE5.</p>
+<p>Add inbound rules for <code>TCP 4560</code>, <code>UDP 14540</code>, and <code>Unreal Engine</code>.</p>
+<h3 id="download-template-source-code">Download Template Source Code</h3>
+<h3 id="run-order">Run Order</h3>
+<p>Run these commands in seperate terminals.</p>
+<ol>
+<li>
+<p>Cosys-AirSim (Windows)</p>
+</li>
+<li>
+<p>uXRCE-DDS (WSL2)</p>
+</li>
+</ol>
+<pre><code class="language-bash">MicroXRCEAgent udp4 -p 8888
+</code></pre>
+<ol>
+<li>PX4 SITL (WSL2)</li>
+</ol>
+<pre><code class="language-bash">cd ~/PX4-Autopilot
+make px4_sitl none_iris
+</code></pre>
+<ol>
+<li>AirSim ROS2 Wrapper (WSL2)</li>
+</ol>
+<pre><code class="language-bash">source ~/Cosys-AirSim/ros2/install/setup.bash
+ros2 launch airsim_ros_pkgs airsim_node.launch.py host_ip:=192.168.128.1
+</code></pre>
+<p>Double check <code>ros2 topic list</code> to see if all the important nodes are running. You should see <code>/airsim_node/*</code> and <code>/fmu/*</code> topics.</p>
+<ol>
+<li>Framework Template Nodes (WSL2)</li>
+</ol>
+<h3 id="additional-resources">Additional Resources</h3>
+<ul>
+<li><a href="https://docs.px4.io/main/en/ros2/user_guide">PX4 ROS2 User Guide</a></li>
+<li><a href="https://discuss.px4.io/t/protoc-error-on-build/44661">Protoc error on build</a></li>
+<li><a href="https://cosys-lab.github.io/Cosys-AirSim/">Cosys-AirSim Docs</a></li>
+</ul></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

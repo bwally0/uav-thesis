@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="https://bwally0.github.io/uav-thesis/architecture/overview/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Overview - UAV Thesis</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">UAV Thesis</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Architecture</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="./" class="dropdown-item active" aria-current="page">Overview</a>
+</li>
+                                    
+<li>
+    <a href="../supervisor/" class="dropdown-item">Supervisor</a>
+</li>
+                                    
+<li>
+    <a href="../control/" class="dropdown-item">Control Layer</a>
+</li>
+                                    
+<li>
+    <a href="../decision/" class="dropdown-item">Decision Layer</a>
+</li>
+                                    
+<li>
+    <a href="../lifecycle/" class="dropdown-item">System Lifecycles</a>
+</li>
+                                    
+<li>
+    <a href="../qos/" class="dropdown-item">QoS</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Tutorials</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../tutorials/installation/" class="dropdown-item">Installation</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/configuration/" class="dropdown-item">Configuration</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../.." class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../supervisor/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#uav-lease-gated-autonomy-stack" class="nav-link">UAV Lease-Gated Autonomy Stack</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#table-of-contents" class="nav-link">Table of Contents</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#layers-of-the-stack" class="nav-link">Layers of the Stack</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="uav-lease-gated-autonomy-stack">UAV Lease-Gated Autonomy Stack</h1>
+<p>This section provides a high-level overview of the <strong>UAV Lease-Gated Autonomy Stack</strong>, a software archiecture built on top of ROS2 for autonomous drone systems. The core design philosphy is explicit, revocable authorization and deterministic safety enforcement, seperating concerns of system health monitoring, control, and decision-making.</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#drone-basics">Drone Basics</a></li>
+<li><a href="#the-lease-gate">The Lease Gate</a></li>
+<li><a href="#layers-of-the-stack">Layers of the Stack</a><ul>
+<li><a href="#supervisor-layer">Supervisor Layer</a></li>
+<li><a href="#control-layer">Control Layer</a></li>
+<li><a href="#decision-layer">Decision Layer</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="drone-basics">Drone Basics</h3>
+<p><img alt="Drone Diagram" src="https://i.imgur.com/JavYUAr.png" /></p>
+<p>At the lowest level, a UAV consists of a few basic components:</p>
+<ul>
+<li><strong>Motors &amp; Propellers</strong>: Brushless motors spin propellers to generate upward thrust on the vehicle frame.</li>
+<li><strong>Electronic Speed Controllers (ESCs)</strong>: Dedicated hardware that translates digital commands into motor outputs, controlling the speed of each motor.</li>
+<li><strong>Sensors</strong>: A suite of sensors including an inertial measurement unit (IMU), barometer, and GPS tells the system where in the world the vehicle is, how fast it is moving, and in what direction.</li>
+<li><strong>Flight Controller (FC)</strong>: The core processing unit that reads sensor data, runs stabilization algorithms, and commands the ESCs to keep the drone airborne.</li>
+</ul>
+<p>Flight controllers run software known as an <strong>autopilot</strong>, with PX4 being a prominent open-source example. The autopilot abstracts the low-level hardware into a set of control interfaces, allowing external systems to issue movement commands and providing the foundation on which higher-level autonomy can be built.</p>
+<p>This is where the <strong>companion computer</strong> comes in. While the flight controller is solely responsible for vehicle stabilization and low-level motion, a companion computer sits alongside it to provide higher-level autonomy. Tasks such as perception, mission logic, and decision-making are computationally intensive and do not need to operate at the same tight timing requirements as the flight control loop, making them well-suited to run on a separate, more capable machine.</p>
+<p>The companion computer issues high-level commands to the flight controller through its exposed interfaces, which then translates those commands into actuator outputs. This division of responsibility for autonomous drone control is well established in practice, and this architecture provides a structured approach to implementing the companion computer side of this system.</p>
+<h3 id="the-lease-gate">The Lease Gate</h3>
+<p><img alt="Lease Gate Diagram" src="https://i.imgur.com/EYwH8HR.png" /></p>
+<p>The system is built around the concept of a Lease Gate. It is a time-bounded authorization barrier that permits drone autonomy. The lease exists in the following two states:</p>
+<ul>
+<li><strong>Granted</strong>: When a valid, unexpired lease is active, authorized control commands are allowed to pass through to the FC.</li>
+<li><strong>Revoked/Expired</strong>: The gate immediately blocks all actuation commands. The control software must cease and may only hold position or execute predefined safe behavior.</li>
+</ul>
+<p>A lease is a short-lived token granted by the supervisor only when a strict set of safety preconditions are met. This ensures that autonomy is never assumed, but always permitted within a known-safe envelope.</p>
+<h2 id="layers-of-the-stack">Layers of the Stack</h2>
+<p><img alt="Basic Control Flow" src="https://i.imgur.com/BdnlAEK.png" /></p>
+<p>The stack is logically divided into three distinct layers: <em>Supervisor Layer</em>, <em>Control Layer</em>, and the <em>Decision Layer</em>. Each with a specific responsibility and well defined interfaces between them.</p>
+<h3 id="supervisor-layer">Supervisor Layer</h3>
+<p>The supervisor is the ultimate authority for autonomous operation. It coninuously monitors the entire system and decides if and under what constraints autonomy is allowed. When a fault is detected, the supervisor is responsible for enforcing the appropriate responsed according to predefiend policy.</p>
+<ul>
+<li><strong>Lease Manager</strong>: Responsible for granting or revoking control leases to the control layer. Lease is granted under certain preconditions and if those preconditions fail, the lease is revoked.</li>
+<li><strong>Health Monitor</strong>: Responsible for verifying the liveliness of the decision and control layers, monitoring the control loop, watching for FC failsafe flags, monitoring CC resources, and fault handling.</li>
+<li><strong>Fault Handler</strong>: Executes predefined response policies when faults are detected such as mode switching, lease revocation, and emergency procedures.</li>
+</ul>
+<p>If PX4 leaves OFFBOARD mode due to RC override, internal failsafe, or manual mode switch the supervisor immediately revokes any active leases. </p>
+<h3 id="control-layer">Control Layer</h3>
+<p>The control layer is responsible for converting high-level intent actions into FC compatible commands when authorized through a lease.</p>
+<ul>
+<li><strong>Lease Gate</strong>: Only passes actuation commands when the lease is valid.</li>
+<li><strong>Intent Arbiter</strong>: Processes the single intent stream from the decision layer, applying priority and envelope checks.</li>
+<li><strong>Intent Validation</strong>: Applies detemrinistic safety filters to all commands, ensuring they remain within the vehicle's physical limits, geofence boundaries, and operational constraints.</li>
+<li><strong>FC Offboard Interface</strong>: Maintains the PX4 offboard handshake (2Hz minimum heartbeat) and executes a fixed-rate control loop (20-50Hz). Publishes safe hold setpoints when autonomy is not authorized.</li>
+</ul>
+<h3 id="decision-layer">Decision Layer</h3>
+<p>The deicison layer determines what the vehicle should do based on mission objectives, sensor data, and environmental context.</p>
+<ul>
+<li><strong>Behavior Tree Engine</strong>: Executes modular, composable behaviors with priority-based arbitration. Higher-priority safet behaviors can preempt mission tasks.</li>
+</ul>
+<p>The decison layer produces advisory intent only, it has no direct command authority. All intent must pass through the control layer's safety validation and lease gating.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
